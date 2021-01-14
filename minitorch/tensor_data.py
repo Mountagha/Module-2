@@ -51,16 +51,27 @@ def count(position, shape, out_index):
     # TODO: Implement for Task 2.1.
     # raise NotImplementedError('Need to implement for Task 2.1')
     strides = strides_from_shape(shape)
+    new_position = position
+    index = []
+    for stride in strides:
+        cur_indice = new_position // stride
+        index.append(cur_indice)
+        new_position -= stride * cur_indice
+    out_index = array(index)
     # compute all different indexes of the tensor_data 
-    ranges = [range(dim) for dim in shape]
-    all_indexes  = product(*ranges)
+    # ranges = [range(dim) for dim in shape]
+    # all_indexes  = product(*ranges)
+    # print("shape {}".format(shape))
+    # print("indexes {}".format(list(all_indexes)))
     # find the position by computing the formula (stride1 * index1 + ... + strideN * indexN)
-    for index in all_indexes:
-        cur_position = dot(array(strides), array(index))
-        if cur_position == position:
-            print("index found {}".format(index))
-            out_index = array(index)
-            break
+    # for index in all_indexes:
+    #    cur_position = dot(array(strides), array(index))
+    #    if cur_position == position:
+    #        out_index = array(index)
+            # print("position {}".format(position))
+            # print("strides {}".format(strides))
+            # print("index found {}".format(out_index))
+    #        break
     
 
     
