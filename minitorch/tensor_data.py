@@ -27,7 +27,6 @@ def index_to_position(index, strides):
 
     # TODO: Implement for Task 2.1.
     # raise NotImplementedError('Need to implement for Task 2.1')
-    # return sum([s * idx for s, idx in zip(strides, index)])
     return dot(strides, index)
 
 
@@ -203,9 +202,14 @@ class TensorData:
 
         # TODO: Implement for Task 2.1.
         # raise NotImplementedError('Need to implement for Task 2.1')
-        print(*order)
+        
+        # kinda feels like cheating on the strides here. unittests passing
+        # anyway, will have to get back here later maybe
+        #  https://github.com/numpy/numpy/issues/12436#issuecomment-440788523 makes
+        # me feels a bit confident though
         new_shape = tuple([self.shape[i] for i in order])
-        return TensorData(self._storage, new_shape)
+        new_strides = tuple([self.strides[i] for i in order])
+        return TensorData(self._storage, new_shape, strides=new_strides)
 
     def to_string(self):
         s = ""
