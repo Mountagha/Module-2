@@ -30,7 +30,13 @@ def tensor_map(fn):
 
     def _map(out, out_shape, out_strides, in_storage, in_shape, in_strides):
         # TODO: Implement for Task 2.2.
-        raise NotImplementedError('Need to implement for Task 2.2')
+        # raise NotImplementedError('Need to implement for Task 2.2')
+        size = np.prod(out_shape) # get the size of the out array
+        in_index, out_index = np.arra([]), np.array([])
+        for i in range(size):
+            count(i, in_shape, in_index)
+            count(i, out_shape, out_index)
+            out[tuple(out_index)] = fn(in_storage[tuple(out_index)])
 
     return _map
 
@@ -100,8 +106,14 @@ def tensor_zip(fn):
         b_strides,
     ):
         # TODO: Implement for Task 2.2.
-        raise NotImplementedError('Need to implement for Task 2.2')
-
+        # raise NotImplementedError('Need to implement for Task 2.2')
+        size = np.prod(out_shape) # get the size of the out array
+        a_index, b_index, out_index = np.array([]), np.array([]), np.array([])
+        for i in range(size):
+            count(i, out_shape, out_index)
+            count(i, a_shape, a_index)
+            count(i, b_shape, b_index)
+            out[tuple(out_index)] = fn(a_storage[tuple(a_index)], b_storage[tuple(b_index)])
     return _zip
 
 
