@@ -96,7 +96,9 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a, b):
                 # TODO: Implement for Task 2.2.
-                raise NotImplementedError('Need to implement for Task 2.2')
+                # raise NotImplementedError('Need to implement for Task 2.2')
+                ctx.save_for_backward(a, b)
+                return mul_zip(a, b)
 
             @staticmethod
             def backward(ctx, grad_output):
@@ -107,7 +109,9 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a):
                 # TODO: Implement for Task 2.2.
-                raise NotImplementedError('Need to implement for Task 2.2')
+                # raise NotImplementedError('Need to implement for Task 2.2')
+                ctx.save_for_backward(a)
+                return sigmoid_map(a)
 
             @staticmethod
             def backward(ctx, grad_output):
@@ -118,7 +122,9 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a):
                 # TODO: Implement for Task 2.2.
-                raise NotImplementedError('Need to implement for Task 2.2')
+                # raise NotImplementedError('Need to implement for Task 2.2')
+                ctx.save_for_backward(a)
+                return relu_map(a)
 
             @staticmethod
             def backward(ctx, grad_output):
@@ -129,7 +135,9 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a):
                 # TODO: Implement for Task 2.2.
-                raise NotImplementedError('Need to implement for Task 2.2')
+                # raise NotImplementedError('Need to implement for Task 2.2')
+                ctx.save_for_backward(a)
+                return log_map(a)
 
             @staticmethod
             def backward(ctx, grad_output):
@@ -140,7 +148,8 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a):
                 # TODO: Implement for Task 2.2.
-                raise NotImplementedError('Need to implement for Task 2.2')
+                # raise NotImplementedError('Need to implement for Task 2.2')
+                return exp_map(a)
 
             @staticmethod
             def backward(ctx, grad_output):

@@ -32,11 +32,14 @@ def tensor_map(fn):
         # TODO: Implement for Task 2.2.
         # raise NotImplementedError('Need to implement for Task 2.2')
         size = np.prod(out_shape) # get the size of the out array
-        in_index, out_index = np.arra([]), np.array([])
+        in_index = np.zeros(MAX_DIMS, np.int32) 
+        out_index = np.zeros(MAX_DIMS, np.int32) 
         for i in range(size):
             count(i, in_shape, in_index)
+            j = index_to_position(in_index, in_strides)
             count(i, out_shape, out_index)
-            out[tuple(out_index)] = fn(in_storage[tuple(out_index)])
+            k = index_to_position(out_index, out_strides)
+            out[j] = fn(in_storage[k])
 
     return _map
 
@@ -107,13 +110,18 @@ def tensor_zip(fn):
     ):
         # TODO: Implement for Task 2.2.
         # raise NotImplementedError('Need to implement for Task 2.2')
-        size = np.prod(out_shape) # get the size of the out array
-        a_index, b_index, out_index = np.array([]), np.array([]), np.array([])
+        size = np.prod(out_shape)
+        a_index = np.zeros(MAX_DIMS, np.int32)
+        b_index = np.zeros(MAX_DIMS, np.int32)
+        out_index = np.zeros(MAX_DIMS, np.int32)
         for i in range(size):
             count(i, out_shape, out_index)
+            o = index_to_position(out_index, out_strides)
             count(i, a_shape, a_index)
+            j = index_to_position(a_index, a_strides)
             count(i, b_shape, b_index)
-            out[tuple(out_index)] = fn(a_storage[tuple(a_index)], b_storage[tuple(b_index)])
+            k = index_to_position(b_index, b_strides)
+            out[o] = fn(a_storage[j], b_storage[k])
     return _zip
 
 
@@ -180,7 +188,20 @@ def tensor_reduce(fn):
         reduce_size,
     ):
         # TODO: Implement for Task 2.2.
-        raise NotImplementedError('Need to implement for Task 2.2')
+        # raise NotImplementedError('Need to implement for Task 2.2')
+        out_index = np.zeros(MAX_DIMS, np.int32)
+        a_index = np.zeros(MAX_DIMS, np.int32)
+        for i in range(len(out)):
+            count(i, out_shape, out_index)
+            o = index_to_position(out_index, out_strides)
+
+            for s in range(reduce_size):
+                count(s, reduce_shape, a_index)
+                for i in range(len(reduce_shape)):
+                    if reduce_shape[i] != 1:
+                        out_index[i] = a_index[i]
+                j = index_to_position(out_index, a_strides)
+                out[o] = fn(out[o], a_storage[j])
 
     return _reduce
 
