@@ -181,7 +181,12 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a, dim):
                 # TODO: Implement for Task 2.2.
-                raise NotImplementedError('Need to implement for Task 2.2')
+                # raise NotImplementedError('Need to implement for Task 2.2')
+                ctx.save_for_backward(a.shape, dim)
+                if dim is not None:
+                    return add_reduce(a, [dim]) / a.shape[dim]
+                else:
+                    return (add_reduce(a, list(range(a.dims))) / a.size()).view(1)
 
             @staticmethod
             def backward(ctx, grad_output):
@@ -192,7 +197,8 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a, b):
                 # TODO: Implement for Task 2.2.
-                raise NotImplementedError('Need to implement for Task 2.2')
+                # raise NotImplementedError('Need to implement for Task 2.2')
+                return lt_zip(a, b)
 
             @staticmethod
             def backward(ctx, grad_output):
@@ -203,7 +209,8 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a, b):
                 # TODO: Implement for Task 2.2.
-                raise NotImplementedError('Need to implement for Task 2.2')
+                # raise NotImplementedError('Need to implement for Task 2.2')
+                return eq_zip(a, b)
 
             @staticmethod
             def backward(ctx, grad_output):
@@ -214,7 +221,14 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a, order):
                 # TODO: Implement for Task 2.2.
-                raise NotImplementedError('Need to implement for Task 2.2')
+                # raise NotImplementedError('Need to implement for Task 2.2')
+                ctx.save_for_backward(a.shape)
+                new_tensor_data = a._tensor.permute(order)
+                return Tensor.make(
+                    new_tensor_data._storage,
+                    new_tensor_data.shape,
+                    strides=new_tensor_data.strides,
+                    backend=a.backend)
 
             @staticmethod
             def backward(ctx, grad_output):

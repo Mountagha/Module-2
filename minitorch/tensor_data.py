@@ -2,7 +2,6 @@ import random
 from .operators import prod
 from numpy import array, float64, ndarray, dot
 import numba
-from itertools import product
 
 MAX_DIMS = 32
 
@@ -28,7 +27,6 @@ def index_to_position(index, strides):
     # TODO: Implement for Task 2.1.
     # raise NotImplementedError('Need to implement for Task 2.1')
     return dot(strides, index)
-
 
 
 def count(position, shape, out_index):
@@ -202,7 +200,7 @@ class TensorData:
 
         # TODO: Implement for Task 2.1.
         # raise NotImplementedError('Need to implement for Task 2.1')
-        
+
         # kinda feels like cheating on the strides here. unittests passing
         # anyway, will have to get back here later maybe
         #  https://github.com/numpy/numpy/issues/12436#issuecomment-440788523 makes

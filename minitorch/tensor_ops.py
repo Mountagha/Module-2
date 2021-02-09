@@ -32,8 +32,9 @@ def tensor_map(fn):
         # TODO: Implement for Task 2.2.
         # raise NotImplementedError('Need to implement for Task 2.2')
         size = np.prod(out_shape) # get the size of the out array
-        in_index = np.zeros(MAX_DIMS, np.int32) 
-        out_index = np.zeros(MAX_DIMS, np.int32) 
+        in_index = np.zeros(len(in_shape), np.int32) 
+        # out_index = np.zeros(MAX_DIMS, np.int32) 
+        out_index = np.zeros(len(out_shape), np.int32) 
         for i in range(size):
             count(i, in_shape, in_index)
             j = index_to_position(in_index, in_strides)
@@ -111,9 +112,9 @@ def tensor_zip(fn):
         # TODO: Implement for Task 2.2.
         # raise NotImplementedError('Need to implement for Task 2.2')
         size = np.prod(out_shape)
-        a_index = np.zeros(MAX_DIMS, np.int32)
-        b_index = np.zeros(MAX_DIMS, np.int32)
-        out_index = np.zeros(MAX_DIMS, np.int32)
+        a_index = np.zeros(len(a_shape), np.int32)
+        b_index = np.zeros(len(b_shape), np.int32)
+        out_index = np.zeros(len(out_shape), np.int32)
         for i in range(size):
             count(i, out_shape, out_index)
             o = index_to_position(out_index, out_strides)
@@ -189,8 +190,9 @@ def tensor_reduce(fn):
     ):
         # TODO: Implement for Task 2.2.
         # raise NotImplementedError('Need to implement for Task 2.2')
-        out_index = np.zeros(MAX_DIMS, np.int32)
-        a_index = np.zeros(MAX_DIMS, np.int32)
+        # poor understanding here. Check later
+        out_index = np.zeros(len(out_shape), np.int32)
+        a_index = np.zeros(len(a_shape), np.int32)
         for i in range(len(out)):
             count(i, out_shape, out_index)
             o = index_to_position(out_index, out_strides)
