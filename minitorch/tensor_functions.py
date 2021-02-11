@@ -105,7 +105,7 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
                 # TODO: Implement for Task 2.3.
                 # raise NotImplementedError('Need to implement for Task 2.3')
                 a, b = ctx.saved_values
-                return mul_zip(a, grad_output), mul_zip(b, grad_output)
+                return mul_zip(b, grad_output), mul_zip(a, grad_output)
 
         class Sigmoid(Function):
             @staticmethod
@@ -203,7 +203,12 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
                 # TODO: Implement for Task 2.3.
                 # raise NotImplementedError('Need to implement for Task 2.3')
                 a_shape, dim = ctx.saved_values
-                return "x"
+                if dim is None:
+                    out = grad_output.zeros(a_shape)
+                    out._tensor._storage[:] = grad_output[0]
+                    return out
+                else:
+                    return grad_output
 
 
         class LT(Function):
