@@ -25,7 +25,6 @@ def index_to_position(index, strides):
     """
 
     # TODO: Implement for Task 2.1.
-    # raise NotImplementedError('Need to implement for Task 2.1')
     return dot(strides, index)
 
 
@@ -46,7 +45,6 @@ def count(position, shape, out_index):
 
     """
     # TODO: Implement for Task 2.1.
-    # raise NotImplementedError('Need to implement for Task 2.1')
     strides = strides_from_shape(shape)
     new_position = position
     for i, stride in enumerate(strides):
@@ -199,7 +197,6 @@ class TensorData:
         ), f"Must give a position to each dimension. Shape: {self.shape} Order: {order}"
 
         # TODO: Implement for Task 2.1.
-        # raise NotImplementedError('Need to implement for Task 2.1')
 
         # kinda feels like cheating on the strides here. unittests passing
         # anyway, will have to get back here later maybe
