@@ -89,7 +89,16 @@ def shape_broadcast(shape1, shape2):
         IndexingError : if cannot broadcast
     """
     # TODO: Implement for Task 2.4.
-    raise NotImplementedError('Need to implement for Task 2.4')
+    # raise NotImplementedError('Need to implement for Task 2.4')
+    min_len = min(len(shape1), len(shape2))
+    union_shape = []
+    for i in range(min_len-1, -1, -1): # reverse iterate through tuples
+        if shape1[i] == shape2[i] or abs(shape1[i] - shape2[i]) == max(shape1[i], shape2[i]) - 1:
+            # either of the dimension is 1 or they're equal.
+            union_shape.append(max(shape1[1], shape2[i]))
+        else:
+            raise IndexError()
+    return tuple(union_shape[::-1])
 
 
 def strides_from_shape(shape):
