@@ -71,8 +71,15 @@ def broadcast_index(big_index, big_shape, shape, out_index):
         None : Fills in `out_index`.
     """
     # TODO: Implement for Task 2.4.
-    raise NotImplementedError('Need to implement for Task 2.4')
-
+    # raise NotImplementedError('Need to implement for Task 2.4')
+    # get the position in the bigger tensor
+    for i in range(len(shape)):
+        if shape[i] > 1:
+            out_index[i] = big_index[i + (len(big_shape) - len(shape))]
+        else:
+            out_index[i] = 0
+    return None
+    
 
 def shape_broadcast(shape1, shape2):
     """
@@ -90,14 +97,16 @@ def shape_broadcast(shape1, shape2):
     """
     # TODO: Implement for Task 2.4.
     # raise NotImplementedError('Need to implement for Task 2.4')
-    min_len = min(len(shape1), len(shape2))
+    bigger_shape = shape1 if len(shape1) > len(shape2) else shape2
     union_shape = []
-    for i in range(min_len-1, -1, -1): # reverse iterate through tuples
-        if shape1[i] == shape2[i] or abs(shape1[i] - shape2[i]) == max(shape1[i], shape2[i]) - 1:
+    for dim1, dim2 in zip(shape1[::-1], shape2[::-1]): # reverse iterate through tuples
+        if dim1 == dim2 or abs(dim1 - dim2) == max(dim1, dim2) - 1:
             # either of the dimension is 1 or they're equal.
-            union_shape.append(max(shape1[1], shape2[i]))
+            union_shape.append(max(dim1, dim2))
         else:
-            raise IndexError()
+            raise IndexingError()
+    for i in range(abs(len(shape1)-len(shape2))): # add remaining value of big tensor into smaller tensor.
+        union_shape.append(bigger_shape[i])
     return tuple(union_shape[::-1])
 
 

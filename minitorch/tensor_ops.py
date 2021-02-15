@@ -34,10 +34,11 @@ def tensor_map(fn):
         in_index = np.zeros(len(in_shape), np.int32) 
         out_index = np.zeros(len(out_shape), np.int32) 
         for i in range(size):
-            count(i, in_shape, in_index)
-            j = index_to_position(in_index, in_strides)
+            # count(i, in_shape, in_index)
             count(i, out_shape, out_index)
-            k = index_to_position(out_index, out_strides)
+            broadcast_index(out_index, out_shape, in_shape, in_index)
+            k = index_to_position(in_index, in_strides)
+            j = index_to_position(out_index, out_strides)
             out[j] = fn(in_storage[k])
 
     return _map
@@ -115,9 +116,11 @@ def tensor_zip(fn):
         for i in range(size):
             count(i, out_shape, out_index)
             o = index_to_position(out_index, out_strides)
-            count(i, a_shape, a_index)
+            broadcast_index(out_index, out_shape, a_shape, a_index)
+            # count(i, a_shape, a_index)
             j = index_to_position(a_index, a_strides)
-            count(i, b_shape, b_index)
+            broadcast_index(out_index, out_shape, b_shape, b_index)
+            # count(i, b_shape, b_index)
             k = index_to_position(b_index, b_strides)
             out[o] = fn(a_storage[j], b_storage[k])
     return _zip

@@ -10,23 +10,23 @@ v = 4.524423
 one_arg = [
     # Uncomment for task 2.4
     ("neg", lambda a: -a),
-    # ("addconstant", lambda a: a + v),
-    # ("lt", lambda a: a < v),
-    # ("subconstant", lambda a: a - v),
-    # ("mult", lambda a: 5 * a),
-    # ("div", lambda a: a / v),
-    # ("sig", lambda a: a.sigmoid()),
-    # ("log", lambda a: (a + 100000).log()),
-    # ("relu", lambda a: (a + 2).relu()),
-    # ("exp", lambda a: (a - 200).exp()),
+    ("addconstant", lambda a: a + v),
+    ("lt", lambda a: a < v),
+    ("subconstant", lambda a: a - v),
+    ("mult", lambda a: 5 * a),
+    ("div", lambda a: a / v),
+    ("sig", lambda a: a.sigmoid()),
+    ("log", lambda a: (a + 100000).log()),
+    ("relu", lambda a: (a + 2).relu()),
+    ("exp", lambda a: (a - 200).exp()),
 ]
 
 reduce = [
     # Uncomment for task 2.4
     ("sum", lambda a: a.sum()),
     ("mean", lambda a: a.mean()),
-    # ("sum2", lambda a: a.sum(0)),
-    # ("mean2", lambda a: a.mean(0)),
+    ("sum2", lambda a: a.sum(0)),
+    ("mean2", lambda a: a.mean(0)),
 ]
 two_arg = [
     # Uncomment for task 2.4
