@@ -25,7 +25,10 @@ def index_to_position(index, strides):
     """
 
     # TODO: Implement for Task 2.1.
-    return dot(strides, index)
+    pos = 0
+    for idx, stride in zip(index, strides):
+        pos += idx * stride
+    return pos
 
 
 def count(position, shape, out_index):
@@ -71,8 +74,6 @@ def broadcast_index(big_index, big_shape, shape, out_index):
         None : Fills in `out_index`.
     """
     # TODO: Implement for Task 2.4.
-    # raise NotImplementedError('Need to implement for Task 2.4')
-    # get the position in the bigger tensor
     for i in range(len(shape)):
         if shape[i] > 1:
             out_index[i] = big_index[i + (len(big_shape) - len(shape))]

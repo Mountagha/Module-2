@@ -31,8 +31,8 @@ def tensor_map(fn):
     def _map(out, out_shape, out_strides, in_storage, in_shape, in_strides):
         # TODO: Implement for Task 2.2.
         size = np.prod(out_shape) # get the size of the out array
-        in_index = np.zeros(len(in_shape), np.int32) 
-        out_index = np.zeros(len(out_shape), np.int32) 
+        in_index = np.zeros(MAX_DIMS, np.int32) 
+        out_index = np.zeros(MAX_DIMS, np.int32) 
         for i in range(size):
             # count(i, in_shape, in_index)
             count(i, out_shape, out_index)
@@ -110,9 +110,9 @@ def tensor_zip(fn):
     ):
         # TODO: Implement for Task 2.2.
         size = np.prod(out_shape)
-        a_index = np.zeros(len(a_shape), np.int32)
-        b_index = np.zeros(len(b_shape), np.int32)
-        out_index = np.zeros(len(out_shape), np.int32)
+        a_index = np.zeros(MAX_DIMS, np.int32)
+        b_index = np.zeros(MAX_DIMS, np.int32)
+        out_index = np.zeros(MAX_DIMS, np.int32)
         for i in range(size):
             count(i, out_shape, out_index)
             o = index_to_position(out_index, out_strides)
@@ -122,6 +122,8 @@ def tensor_zip(fn):
             broadcast_index(out_index, out_shape, b_shape, b_index)
             # count(i, b_shape, b_index)
             k = index_to_position(b_index, b_strides)
+            if j == 6 and np.prod(a_shape) == 6:
+                print("a_index ", a_index, "b_index", b_index, "out_index", out_index)
             out[o] = fn(a_storage[j], b_storage[k])
     return _zip
 
@@ -190,8 +192,8 @@ def tensor_reduce(fn):
     ):
         # TODO: Implement for Task 2.2.
         # poor understanding here. Check later
-        out_index = np.zeros(len(out_shape), np.int32)
-        a_index = np.zeros(len(a_shape), np.int32)
+        out_index = np.zeros(MAX_DIMS, np.int32)
+        a_index = np.zeros(MAX_DIMS, np.int32)
         for i in range(len(out)):
             count(i, out_shape, out_index)
             o = index_to_position(out_index, out_strides)

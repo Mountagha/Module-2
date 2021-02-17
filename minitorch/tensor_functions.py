@@ -109,15 +109,15 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a):
                 # TODO: Implement for Task 2.2.
-                ctx.save_for_backward(a)
-                return sigmoid_map(a)
+                out = sigmoid_map(a)
+                ctx.save_for_backward(out)
+                return out
 
             @staticmethod
             def backward(ctx, grad_output):
                 # TODO: Implement for Task 2.3.
-                a = ctx.saved_values
-                ones = np.ones(a.shape)
-                return mul_zip(grad_output, mul_zip(sigmoid_map(a), add_zip(ones, neg_map(sigmoid_map(a)))))
+                sigma = ctx.saved_values
+                return sigma * (-sigma + 1.0) * grad_output
 
         class ReLU(Function):
             @staticmethod
@@ -209,23 +209,27 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a, b):
                 # TODO: Implement for Task 2.2.
+                ctx.save_for_backward(a.shape, b.shape)
                 return lt_zip(a, b)
 
             @staticmethod
             def backward(ctx, grad_output):
                 # TODO: Implement for Task 2.3.
-                return grad_output
+                a_shape, b_shape = ctx.saved_values
+                return zeros(a_shape), zeros(b_shape)
 
         class EQ(Function):
             @staticmethod
             def forward(ctx, a, b):
                 # TODO: Implement for Task 2.2.
+                ctx.save_for_backward(a.shape, b.shape)
                 return eq_zip(a, b)
 
             @staticmethod
             def backward(ctx, grad_output):
                 # TODO: Implement for Task 2.3.
-                return grad_output
+                a_shape, b_shape = ctx.saved_values
+                return zeros(a_shape), zeros(b_shape)
 
         class Permute(Function):
             @staticmethod

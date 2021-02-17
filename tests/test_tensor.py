@@ -32,7 +32,7 @@ two_arg = [
     # Uncomment for task 2.4
     ("add", lambda a, b: a + b),
     ("mul", lambda a, b: a * b),
-    # ("lt", lambda a, b: a < b + v),
+    ("lt", lambda a, b: a < b + v),
 ]
 
 
