@@ -30,11 +30,10 @@ def tensor_map(fn):
 
     def _map(out, out_shape, out_strides, in_storage, in_shape, in_strides):
         # TODO: Implement for Task 2.2.
-        size = np.prod(out_shape) # get the size of the out array
-        in_index = np.zeros(MAX_DIMS, np.int32) 
-        out_index = np.zeros(MAX_DIMS, np.int32) 
+        size = np.prod(out_shape)  # get the size of the out array
+        in_index = np.zeros(MAX_DIMS, np.int32)
+        out_index = np.zeros(MAX_DIMS, np.int32)
         for i in range(size):
-            # count(i, in_shape, in_index)
             count(i, out_shape, out_index)
             broadcast_index(out_index, out_shape, in_shape, in_index)
             k = index_to_position(in_index, in_strides)
@@ -117,12 +116,10 @@ def tensor_zip(fn):
             count(i, out_shape, out_index)
             o = index_to_position(out_index, out_strides)
             broadcast_index(out_index, out_shape, a_shape, a_index)
-            # count(i, a_shape, a_index)
             j = index_to_position(a_index, a_strides)
             broadcast_index(out_index, out_shape, b_shape, b_index)
-            # count(i, b_shape, b_index)
             k = index_to_position(b_index, b_strides)
-            if j == 6 and np.prod(a_shape) == 6:
+            if j == 6 and np.prod(a_shape) == 6 and o == 6 and np.prod(out_shape) == 6:
                 print("a_index ", a_index, "b_index", b_index, "out_index", out_index)
             out[o] = fn(a_storage[j], b_storage[k])
     return _zip

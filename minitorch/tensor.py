@@ -32,8 +32,8 @@ class Tensor(Variable):
         """
         return self.contiguous()._tensor._storage.reshape(self.shape)
 
-
     # Properties
+
     @property
     def shape(self):
         """

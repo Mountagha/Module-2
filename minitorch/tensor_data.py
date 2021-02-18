@@ -1,6 +1,6 @@
 import random
 from .operators import prod
-from numpy import array, float64, ndarray, dot
+from numpy import array, float64, ndarray
 import numba
 
 MAX_DIMS = 32
@@ -80,7 +80,7 @@ def broadcast_index(big_index, big_shape, shape, out_index):
         else:
             out_index[i] = 0
     return None
-    
+
 
 def shape_broadcast(shape1, shape2):
     """
@@ -97,16 +97,19 @@ def shape_broadcast(shape1, shape2):
         IndexingError : if cannot broadcast
     """
     # TODO: Implement for Task 2.4.
-    # raise NotImplementedError('Need to implement for Task 2.4')
     bigger_shape = shape1 if len(shape1) > len(shape2) else shape2
     union_shape = []
-    for dim1, dim2 in zip(shape1[::-1], shape2[::-1]): # reverse iterate through tuples
-        if dim1 == dim2 or abs(dim1 - dim2) == max(dim1, dim2) - 1:
-            # either of the dimension is 1 or they're equal.
+    for dim1, dim2 in zip(shape1[::-1], shape2[::-1]):  # reverse iterate through tuples
+        # either of the dimension is 1 or they're equal.
+        if dim1 == dim2:
+            union_shape.append(dim1)
+        elif dim1 == 1 or dim2 == 1:
             union_shape.append(max(dim1, dim2))
         else:
-            raise IndexingError()
-    for i in range(abs(len(shape1)-len(shape2))): # add remaining value of big tensor into smaller tensor.
+            print(shape1, shape2)
+            raise IndexingError("Failed to broadcast {shape1} {shape2}")
+    # add remaining value of big tensor into smaller tensor.
+    for i in range(abs(len(shape1) - len(shape2)) - 1, -1, -1):
         union_shape.append(bigger_shape[i])
     return tuple(union_shape[::-1])
 

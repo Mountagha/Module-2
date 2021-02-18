@@ -39,7 +39,6 @@ class Linear(minitorch.Module):
 
     def forward(self, x):
         # TODO: Implement for Task 2.5.
-        # raise NotImplementedError('Need to implement for Task 2.5')
         batch, in_size = x.shape
         return (
             self.weights.value.view(1, in_size, self.out_size)

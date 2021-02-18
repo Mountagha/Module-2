@@ -149,12 +149,15 @@ def make_tensor_backend(tensor_ops, is_cuda=False):
             @staticmethod
             def forward(ctx, a):
                 # TODO: Implement for Task 2.2.
-                return exp_map(a)
+                out = exp_map(a)
+                ctx.save_for_backward(out)
+                return out
 
             @staticmethod
             def backward(ctx, grad_output):
                 # TODO: Implement for Task 2.3.
-                return exp_map(grad_output)
+                out = ctx.saved_values
+                return mul_zip(out, grad_output)
 
         class Sum(Function):
             @staticmethod
